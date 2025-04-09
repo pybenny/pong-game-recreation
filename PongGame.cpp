@@ -1,6 +1,9 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <cstdlib>
+#include <random>
+#include <ctime>
 #include <vector>
 
 using namespace std;
@@ -44,12 +47,16 @@ int main()
 
     // graphical display of the pong game
     RectangleShape midCourtLine; // defining the mid court line
-    ////int midPoint = Vector2f(windowSize.x - 2);
     midCourtLine.setSize(Vector2f(5.f, windowSize.y));
     midCourtLine.setFillColor(Color::White);
     midCourtLine.setPosition(Vector2f(windowSize.x / 2.f, 0.f));
 
-
+// BALL -----------------------------------
+    CircleShape ball; // define ball
+    ball.setFillColor(Color::White);
+    ball.setRadius(float(5.f));
+    ball.setPosition(Vector2f(windowSize.x / 2.f - ball.getRadius(), windowSize.y / 2.f - ball.getRadius())); // set position divided by window parameter MINUS 5 to account for ball radius size
+    
 
 // MUSIC -------------------------------------------------------
 
@@ -96,8 +103,17 @@ int main()
             playerTwo.move(Vector2f(0.f, 0.12f)); // moves down
         }
 
+        // BALL ---------------------------------
+        Vector2f ballVelocity;
+        float ballSpeed = 5.f;
 
 
+
+        // BOUNDARIES FOR BALL ---------------------------------
+
+
+
+        // BOUNDARIES FOR PLAYER --------------------------------------------
         // parameter boundaries for playerOne rectangle
         if (playerOne.getPosition().y < 0.f) {
             playerOne.setPosition(Vector2f(playerOne.getPosition().x, 0.f));
@@ -116,15 +132,19 @@ int main()
 
 
 
+
         // Clear screen
         window.clear();
 
         // Draw the mid court line
-        window.draw(midCourtLine);
+        //window.draw(midCourtLine);  // Removing midcourt line temporarily for ball testing
 
         // Draw the pongs/player rectangles
         window.draw(playerOne);
         window.draw(playerTwo);
+
+        // Draw the ball
+        window.draw(ball);
 
         // Draw the text
         window.draw(text);
@@ -134,3 +154,8 @@ int main()
     }
     return 0;
 }
+
+// NOTES:
+// git add .
+// git commit -m "message"
+// git push
